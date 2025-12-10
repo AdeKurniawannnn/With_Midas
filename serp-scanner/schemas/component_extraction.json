@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Component Extraction Schema for SERP Scanner",
+  "description": "Schema for validating AI-generated component extraction from natural language input for Indonesian executive LinkedIn searches",
+  "type": "object",
+  "required": [
+    "locations",
+    "seniority",
+    "industries",
+    "technologies",
+    "implicit_components",
+    "target_intent",
+    "confidence_score",
+    "extraction_metadata"
+  ],
+  "properties": {
+    "locations": {
+      "type": "array",
+      "description": "Extracted location components with Indonesian geographic context",
+      "items": {
+        "type": "object",
+        "required": ["city"],
+        "properties": {
+          "city": {
+            "type": "string",
+            "description": "Primary city name (e.g., 'Jakarta', 'Surabaya')",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "region": {
+            "type": "string",
+            "description": "Province or region (e.g., 'DKI Jakarta', 'Jawa Timur')",
+            "maxLength": 100
+          },
+          "country": {
+            "type": "string",
+            "description": "Country name, typically 'Indonesia'",
+            "maxLength": 50
+          }
+        }
+      }
+    },
+    "seniority": {
+      "type": "array",
+      "description": "Executive seniority levels and title variants",
+      "items": {
+        "type": "object",
+        "required": ["level", "title_variants"],
+        "properties": {
+          "level": {
+            "type": "string",
+            "description": "Seniority level (e.g., 'CEO', 'CTO', 'Director')",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "title_variants": {
+            "type": "array",
+            "description": "Alternative titles and variations",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "industries": {
+      "type": "array",
+      "description": "Industry sectors and specializations",
+      "items": {
+        "type": "object",
+        "required": ["primary"],
+        "properties": {
+          "primary": {
+            "type": "string",
+            "description": "Primary industry sector (e.g., 'fintech', 'cloud', 'AI')",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "secondary": {
+            "type": "array",
+            "description": "Related sub-sectors and specializations",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            }
+          }
+        }
+      }
+    },
+    "technologies": {
+      "type": "array",
+      "description": "Technology readiness indicators and company types",
+      "items": {
+        "type": "object",
+        "required": ["readiness"],
+        "properties": {
+          "readiness": {
+            "type": "string",
+            "description": "Technology readiness level (e.g., 'cloud', 'startup', 'enterprise')",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "company_types": {
+            "type": "array",
+            "description": "Associated company characteristics",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50
+            }
+          }
+        }
+      }
+    },
+    "implicit_components": {
+      "type": "array",
+      "description": "Implicit requirements inferred from context",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 100
+      }
+    },
+    "target_intent": {
+      "type": "object",
+      "description": "Lead generation strategy and focus",
+      "required": ["strategy", "focus"],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "description": "Lead generation approach (e.g., 'executive_outreach', 'partnership_development')",
+          "enum": ["executive_outreach", "partnership_development", "sales_prospecting", "networking", "market_research"]
+        },
+        "focus": {
+          "type": "string",
+          "description": "Target focus area (e.g., 'executive_level', 'decision_makers', 'technical_leadership')",
+          "enum": ["executive_level", "decision_makers", "technical_leadership", "business_development", "innovation_leadership"]
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "Overall confidence in extraction accuracy (0.0 to 1.0)",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "extraction_metadata": {
+      "type": "object",
+      "description": "Metadata about the extraction process",
+      "required": ["complexity", "ambiguity"],
+      "properties": {
+        "complexity": {
+          "type": "string",
+          "description": "Input complexity assessment",
+          "enum": ["simple", "moderate", "complex", "very_complex"]
+        },
+        "ambiguity": {
+          "type": "string",
+          "description": "Level of ambiguity in input",
+          "enum": ["low", "medium", "high", "very_high"]
+        },
+        "indonesian_context": {
+          "type": "boolean",
+          "description": "Whether Indonesian business context was detected"
+        },
+        "executive_focus": {
+          "type": "boolean",
+          "description": "Whether executive-level targeting was identified"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "locations": [
+        {
+          "city": "Jakarta",
+          "region": "DKI Jakarta",
+          "country": "Indonesia"
+        }
+      ],
+      "seniority": [
+        {
+          "level": "CEO",
+          "title_variants": ["Chief Executive Officer", "Direktur Utama", "President Director"]
+        }
+      ],
+      "industries": [
+        {
+          "primary": "fintech",
+          "secondary": ["financial technology", "payment systems", "digital banking"]
+        }
+      ],
+      "technologies": [
+        {
+          "readiness": "cloud",
+          "company_types": ["scale-up", "enterprise"]
+        }
+      ],
+      "implicit_components": ["digital transformation focus"],
+      "target_intent": {
+        "strategy": "executive_outreach",
+        "focus": "executive_level"
+      },
+      "confidence_score": 0.85,
+      "extraction_metadata": {
+        "complexity": "moderate",
+        "ambiguity": "low",
+        "indonesian_context": true,
+        "executive_focus": true
+      }
+    }
+  ]
+}

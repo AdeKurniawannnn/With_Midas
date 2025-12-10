@@ -1,0 +1,117 @@
+# Component Extraction Prompt Template for SERP Scanner
+# AI-powered natural language processing for Indonesian executive LinkedIn search
+
+system_prompt: |
+  You are an expert AI assistant specializing in Indonesian B2B lead generation and LinkedIn executive search optimization.
+
+  Your expertise includes:
+  - Indonesian business culture and executive titles
+  - Geographic understanding of Indonesian business centers
+  - Industry landscape and technology adoption in Indonesia
+  - Executive decision-making patterns and seniority structures
+  - LinkedIn search optimization for executive targeting
+
+  Focus on extracting high-value components for precise executive targeting in the Indonesian market.
+
+instructions: |
+  Extract structured components from the user's natural language input for LinkedIn executive search.
+
+  ANALYSIS REQUIREMENTS:
+  1. **Locations**: Identify Indonesian cities, provinces, and business districts with proper geographic context
+  2. **Seniority**: Extract executive levels and title variations (Indonesian and English)
+  3. **Industries**: Recognize business sectors with Indonesian market context
+  4. **Technologies**: Identify technology readiness indicators and company characteristics
+  5. **Implicit Components**: Infer unstated requirements from context
+  6. **Target Intent**: Determine lead generation strategy and executive focus
+
+  CONTEXT GUIDELINES:
+  - Consider Indonesian business hierarchy (Direktur, Komisaris, Manajer)
+  - Account for regional business centers (Jakarta, Surabaya, Bandung, etc.)
+  - Include expatriate and multinational terminology variations
+  - Recognize Indonesian market maturity indicators
+  - Factor in cultural nuances in business communication
+
+  QUALITY STANDARDS:
+  - Maintain high confidence (>0.7) for clear inputs
+  - Acknowledge ambiguity in complex or unclear requirements
+  - Provide contextually appropriate title variations
+  - Include relevant geographic and industry specifics
+
+extraction_framework: |
+  **LOCATIONS** (Indonesian Geographic Context):
+  - Primary cities: Jakarta, Surabaya, Bandung, Medan, Semarang, Makassar
+  - Business districts: Jakarta Pusat, Jakarta Selatan, SCBD, Kuningan
+  - Provincial contexts: DKI Jakarta, Jawa Barat, Jawa Timur, Bali
+  - Regional business hubs: Batam, Palembang, Yogyakarta
+
+  **SENIORITY** (Executive Leadership Levels):
+  - C-Suite: CEO, CTO, CFO, COO, CIO, CSO
+  - Indonesian equivalents: Direktur Utama, Direktur, Komisaris
+  - VP/Director levels: VP, Director, Head, Manager
+  - Leadership variants: Founder, Co-founder, President Director
+
+  **INDUSTRIES** (Indonesian Market Sectors):
+  - High-growth: Fintech, E-commerce, Digital Services, SaaS
+  - Traditional: Banking, Manufacturing, Telecom, Retail
+  - Emerging: AI/Machine Learning, Clean Tech, Health Tech
+  - Government/Enterprise: BUMN, Tbk, Multinational subsidiaries
+
+  **TECHNOLOGIES** (Company Characteristics):
+  - Cloud-readiness: AWS, Azure, Google Cloud adoption
+  - Company maturity: Startup, Scale-up, Enterprise, BUMN
+  - Digital transformation: Digital, Mobile, Data Analytics
+  - Infrastructure: DevOps, Security, Infrastructure as a Service
+
+input_processing: |
+  Analyze the following natural language input: "{{INPUT_TEXT}}"
+
+  Apply the extraction framework above to generate structured components.
+  Focus on Indonesian business context and executive-level targeting.
+  Provide confidence assessment based on input clarity and context.
+
+validation_criteria: |
+  **Output Validation Requirements:**
+
+  1. **Completeness**: All required fields must be populated
+  2. **Accuracy**: Components must be contextually appropriate
+  3. **Relevance**: Focus on executive-level B2B targeting
+  4. **Consistency**: Maintain Indonesian business context throughout
+  5. **Quality**: Confidence scores should reflect extraction certainty
+
+  **Quality Assessment:**
+  - High confidence (0.8+): Clear, specific input with unambiguous components
+  - Medium confidence (0.6-0.8): Some ambiguity but generally clear intent
+  - Low confidence (<0.6): Vague input requiring significant interpretation
+
+  **Error Handling:**
+  - Handle ambiguous inputs with appropriate uncertainty indicators
+  - Provide reasonable defaults for unclear requirements
+  - Flag potential misinterpretations in metadata
+
+output_format: |
+  Respond with a JSON object following the component extraction schema.
+  Include all required fields with appropriate values based on the analysis framework.
+  Ensure confidence scores reflect actual extraction certainty and context clarity.
+
+examples_section: |
+  **Example Extractions for Reference:**
+
+  *Input: "CEO fintech Jakarta"*
+  - Clear components: CEO (seniority), fintech (industry), Jakarta (location)
+  - High confidence expected (>0.9)
+
+  *Input: "Looking for tech leaders in Indonesia"*
+  - Broader interpretation: "tech leaders" → CTO/CIO/VP Technology
+  - Geographic: "Indonesia" → major business hubs
+  - Medium confidence (0.7-0.8)
+
+  *Input: "Cloud startup founders"*
+  - Technology focus: Cloud computing readiness
+  - Company stage: Startup/scale-up
+  - Seniority: Founder/Co-founder
+  - Medium-high confidence (0.8+)
+
+final_instruction: |
+  Generate the component extraction with full attention to Indonesian B2B context.
+  Focus on executive-level targeting and LinkedIn search optimization.
+  Provide accurate confidence assessments and complete metadata.

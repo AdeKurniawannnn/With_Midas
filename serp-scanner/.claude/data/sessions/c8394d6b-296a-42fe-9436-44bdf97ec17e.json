@@ -1,0 +1,16 @@
+{
+  "session_id": "c8394d6b-296a-42fe-9436-44bdf97ec17e",
+  "prompts": [
+    "can you use uv instead of python3? test",
+    "what are the input parameters to choose from?",
+    "in the scripts make sure default workers is set to 10 and max pages is set to 30 and aggregate is always true. also mention explicitly in skill.md",
+    "max pages can't be more than 30. its the theoretical ceiling",
+    "then test ",
+    "use the serp-scanner skill to search for companies in indonesia that sells wheat",
+    "is this all results from 30 pages?",
+    "i don't see the other pages being aggregated",
+    "try not linkedin query. but something that cna have results from 30 pages",
+    "for the query jakarta can you check pages 31-40? is it available and is it unieuq if available?",
+    "test this again with 5 different queries. use subagents in parallel to test the queries"
+  ]
+}

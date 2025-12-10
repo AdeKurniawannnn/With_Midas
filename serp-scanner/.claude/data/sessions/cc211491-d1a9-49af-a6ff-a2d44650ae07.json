@@ -1,0 +1,9 @@
+{
+  "session_id": "cc211491-d1a9-49af-a6ff-a2d44650ae07",
+  "prompts": [
+    "out of the 30 pages, what di dyou find apart from the  linkedin profiles?",
+    "use serp-scanner skill to query \"udang indonesia\" 30 pages. without building query. direct use the serp",
+    "can you check if the 298 results are organic?",
+    "are they unique?"
+  ]
+}

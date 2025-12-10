@@ -1,0 +1,8 @@
+{
+  "session_id": "f25b4819-3b79-41bd-ad02-0e2e8b9acbf8",
+  "prompts": [
+    "try again",
+    "change claude cli from using \n```bash\nclaude\n```\nto \n```\nglm\n```",
+    "no fallback to claude. or backwards compatibility, just change"
+  ]
+}

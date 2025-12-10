@@ -1,0 +1,203 @@
+{
+  "zero_shot_text": {
+    "description": "Zero-shot text classification",
+    "endpoint": "https://api.jina.ai/v1/classify",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v3",
+      "input": [
+        {
+          "text": "I love this product! Highly recommended."
+        },
+        {
+          "text": "This product is terrible. Would not recommend."
+        },
+        {
+          "text": "The product works as advertised, nothing special."
+        }
+      ],
+      "labels": [
+        "positive",
+        "negative",
+        "neutral"
+      ]
+    }
+  },
+  "zero_shot_image": {
+    "description": "Zero-shot image classification",
+    "endpoint": "https://api.jina.ai/v1/classify",
+    "method": "POST",
+    "request_headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-clip-v1",
+      "input": [
+        {
+          "image": "BASE64_ENCODED_IMAGE_DATA"
+        },
+        {
+          "image": "BASE64_ENCODED_IMAGE_DATA"
+        }
+      ],
+      "labels": [
+        "cat",
+        "dog",
+        "bird",
+        "car"
+      ]
+    }
+  },
+  "multi_class_classification": {
+    "description": "Multi-class text classification",
+    "endpoint": "https://api.jina.ai/v1/classify",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v3",
+      "input": [
+        {
+          "text": "Quarterly financial report shows 15% growth"
+        },
+        {
+          "text": "Technical documentation updated with new examples"
+        },
+        {
+          "text": "Marketing campaign launched with social media focus"
+        },
+        {
+          "text": "Security audit completed with minor issues found"
+        },
+        {
+          "text": "Customer satisfaction survey results compiled"
+        }
+      ],
+      "labels": [
+        "financial",
+        "technical",
+        "marketing",
+        "security",
+        "customer_service"
+      ]
+    }
+  },
+  "trained_classifier_usage": {
+    "description": "Usage with trained classifier",
+    "endpoint": "https://api.jina.ai/v1/classify",
+    "method": "post",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "classifier_id": "classifier_12345",
+      "input": [
+        {
+          "text": "New email from potential customer"
+        }
+      ]
+    }
+  },
+  "training_classifier": {
+    "description": "Train a few-shot classifier",
+    "endpoint": "https://api.jina.ai/v1/train",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v3",
+      "data": [
+        {
+          "text": "Buy now, limited time offer!",
+          "label": "spam"
+        },
+        {
+          "text": "Meeting scheduled for tomorrow at 3pm",
+          "label": "not_spam"
+        },
+        {
+          "text": "Special discount just for you",
+          "label": "spam"
+        },
+        {
+          "text": "Regular team update newsletter",
+          "label": "not_spam"
+        },
+        {
+          "text": "Product inquiry from potential client",
+          "label": "not_spam"
+        }
+      ],
+      "num_iters": 5
+    }
+  },
+  "sentiment_analysis": {
+    "description": "Sentiment analysis for customer feedback",
+    "endpoint": "https://api.jina.ai/v1/classify",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v3",
+      "input": [
+        {
+          "text": "The customer service was excellent and resolved my issue quickly."
+        },
+        {
+          "text": "I waited on hold for 45 minutes only to be disconnected."
+        },
+        {
+          "text": "The product works but the price is too high."
+        }
+      ],
+      "labels": [
+        "very_positive",
+        "positive",
+        "neutral",
+        "negative",
+        "very_negative"
+      ]
+    }
+  },
+  "content_moderation": {
+    "description": "Content moderation for user-generated content",
+    "endpoint": "https://api.jina.ai/v1/classify",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v3",
+      "input": [
+        {
+          "text": "This product is amazing! Buy it now!!!"
+        },
+        {
+          "text": "Click here for exclusive offer"
+        },
+        {
+          "text": "What are your thoughts on this article?"
+        }
+      ],
+      "labels": [
+        "spam",
+        "promotional",
+        "legitimate",
+        "question"
+      ]
+    }
+  }
+}

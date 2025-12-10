@@ -1,0 +1,235 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Query Construction Schema for SERP Scanner",
+  "description": "Schema for validating AI-generated LinkedIn search query construction from extracted components",
+  "type": "object",
+  "required": [
+    "query_structure",
+    "exact_match",
+    "exclusion_filters",
+    "quality_metrics",
+    "confidence_score",
+    "construction_metadata"
+  ],
+  "properties": {
+    "query_structure": {
+      "type": "object",
+      "description": "Core query structure with LinkedIn search optimization",
+      "required": ["base_url", "search_terms", "filters", "boolean_logic"],
+      "properties": {
+        "base_url": {
+          "type": "string",
+          "description": "LinkedIn base URL for profile searches",
+          "pattern": "^site:linkedin\\.com/in$"
+        },
+        "search_terms": {
+          "type": "array",
+          "description": "Primary search terms with Boolean logic",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "minItems": 1
+        },
+        "filters": {
+          "type": "array",
+          "description": "Additional filtering components",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "boolean_logic": {
+          "type": "object",
+          "description": "Boolean operator configuration and precedence",
+          "required": ["operators", "precedence"],
+          "properties": {
+            "operators": {
+              "type": "array",
+              "description": "Boolean operators used in query",
+              "items": {
+                "type": "string",
+                "enum": ["AND", "OR", "NOT"]
+              },
+              "minItems": 1
+            },
+            "precedence": {
+              "type": "string",
+              "description": "Operator precedence strategy",
+              "enum": ["standard", "location_first", "seniority_first", "industry_first", "custom"]
+            }
+          }
+        }
+      }
+    },
+    "exact_match": {
+      "type": "object",
+      "description": "Exact match term configuration with quotation strategies",
+      "required": ["terms", "strategy"],
+      "properties": {
+        "terms": {
+          "type": "array",
+          "description": "Terms that should be exact matched",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "strategy": {
+          "type": "string",
+          "description": "Exact match strategy for different term types",
+          "enum": ["all_terms", "titles_only", "locations_only", "industries_only", "intelligent"]
+        }
+      }
+    },
+    "exclusion_filters": {
+      "type": "array",
+      "description": "Context-appropriate exclusion terms",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "minItems": 3
+    },
+    "quality_metrics": {
+      "type": "object",
+      "description": "Comprehensive quality assessment metrics",
+      "required": ["precision_score", "coverage_score", "complexity_score", "optimization_notes"],
+      "properties": {
+        "precision_score": {
+          "type": "number",
+          "description": "Expected precision of search results (0.0 to 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "coverage_score": {
+          "type": "number",
+          "description": "Expected coverage of target profiles (0.0 to 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "complexity_score": {
+          "type": "number",
+          "description": "Query complexity level (0.0 to 1.0)",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "query_length": {
+          "type": "integer",
+          "description": "Character length of constructed query",
+          "minimum": 10,
+          "maximum": 2000
+        },
+        "term_count": {
+          "type": "integer",
+          "description": "Number of search terms in query",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "optimization_notes": {
+          "type": "string",
+          "description": "Notes on query optimization and trade-offs",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        "indonesian_optimization": {
+          "type": "string",
+          "description": "Indonesian market specific optimizations applied",
+          "enum": ["basic", "moderate", "advanced", "comprehensive"]
+        }
+      }
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "Overall confidence in query construction quality (0.0 to 1.0)",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "construction_metadata": {
+      "type": "object",
+      "description": "Metadata about the query construction process",
+      "required": ["query_length", "optimization_level", "target_specificity"],
+      "properties": {
+        "query_length": {
+          "type": "string",
+          "description": "Length classification",
+          "enum": ["short", "medium", "long", "very_long"]
+        },
+        "optimization_level": {
+          "type": "string",
+          "description": "Level of LinkedIn search optimization applied",
+          "enum": ["basic", "standard", "optimized", "advanced"]
+        },
+        "target_specificity": {
+          "type": "string",
+          "description": "Specificity level of target audience",
+          "enum": ["broad", "moderate", "specific", "highly_specific"]
+        },
+        "cultural_adaptation": {
+          "type": "boolean",
+          "description": "Whether Indonesian business culture was considered"
+        },
+        "geographic_precision": {
+          "type": "string",
+          "description": "Precision of geographic targeting",
+          "enum": ["country_level", "province_level", "city_level", "district_level"]
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "query_structure": {
+        "base_url": "site:linkedin.com/in",
+        "search_terms": [
+          "(\"Jakarta\" OR \"DKI Jakarta\" OR \"Jakarta Pusat\" OR \"Jakarta Selatan\")",
+          "(CEO OR \"Chief Executive Officer\" OR Founder OR \"Co-founder\")",
+          "(fintech OR \"financial technology\" OR \"banking technology\" OR payment)"
+        ],
+        "filters": ["cloud OR \"cloud computing\" OR AWS OR Azure"],
+        "boolean_logic": {
+          "operators": ["AND", "OR"],
+          "precedence": "location_first"
+        }
+      },
+      "exact_match": {
+        "terms": ["Jakarta", "CEO", "Chief Executive Officer", "fintech"],
+        "strategy": "intelligent"
+      },
+      "exclusion_filters": [
+        "recruiter",
+        "hr",
+        "human",
+        "resources",
+        "intern",
+        "student",
+        "graduate",
+        "trainer",
+        "consultant",
+        "freelance"
+      ],
+      "quality_metrics": {
+        "precision_score": 0.85,
+        "coverage_score": 0.78,
+        "complexity_score": 0.65,
+        "query_length": 245,
+        "term_count": 12,
+        "optimization_notes": "Optimized for Indonesian executive fintech sector with precise geographic targeting",
+        "indonesian_optimization": "advanced"
+      },
+      "confidence_score": 0.88,
+      "construction_metadata": {
+        "query_length": "medium",
+        "optimization_level": "optimized",
+        "target_specificity": "specific",
+        "cultural_adaptation": true,
+        "geographic_precision": "city_level"
+      }
+    }
+  ]
+}

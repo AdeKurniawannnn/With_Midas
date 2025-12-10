@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Location Mapping Schema",
+  "description": "Schema for validating AI-generated location mappings for LinkedIn search",
+  "type": "object",
+  "properties": {
+    "location_mappings": {
+      "type": "string",
+      "description": "LinkedIn search terms with OR operators for location targeting",
+      "pattern": "^[\\w\\s\\\"\\-\\(\\)OR]+$",
+      "minLength": 5,
+      "maxLength": 1000
+    },
+    "coverage_assessment": {
+      "type": "string",
+      "description": "Assessment of location expansion completeness",
+      "maxLength": 500
+    },
+    "local_considerations": {
+      "type": "string",
+      "description": "Indonesian business context notes for the location",
+      "maxLength": 500
+    }
+  },
+  "required": ["location_mappings"],
+  "additionalProperties": false
+}

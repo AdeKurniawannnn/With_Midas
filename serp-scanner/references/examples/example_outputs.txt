@@ -1,0 +1,20 @@
+# Input: CEO Jakarta fintech
+site:linkedin.com/in ("Jakarta" OR "DKI Jakarta" OR "Jakarta Pusat" OR "Jakarta Selatan") (CEO OR "Chief Executive Officer" OR Founder OR "Co-founder") (fintech OR "financial technology" OR "banking technology" OR payment) -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance
+
+# Input: CTO Bandung cloud computing startup
+site:linkedin.com/in ("Bandung" OR "West Java" OR "Jawa Barat") (CTO OR "Chief Technology Officer" OR "VP Technology" OR "Technology Director") ("cloud computing" OR "cloud services" OR AWS OR Azure OR "Google Cloud") (startup OR "scale-up" OR entrepreneur OR "fast-growing") -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance
+
+# Input: AI Director Indonesia enterprise
+site:linkedin.com/in (Indonesia OR Indonesian) (Director OR VP OR Head OR Manager) (AI OR "artificial intelligence" OR "machine learning" OR "generative AI") (enterprise OR multinational OR corporation OR BUMN OR Tbk) -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance
+
+# Input: CFO Medan banking multinational
+site:linkedin.com/in (Medan OR "North Sumatra") (CFO OR "Chief Financial Officer" OR "Finance Director") banking (enterprise OR multinational OR corporation) -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance
+
+# Input: VP Engineering Bali e-commerce digital transformation
+site:linkedin.com/in (Bali OR Denpasar OR Badung) ("VP Engineering" OR "Engineering Director") ("e-commerce" OR ecommerce OR "online retail" OR marketplace) "digital transformation" -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance
+
+# Input: Founder Jakarta startup venture capital
+site:linkedin.com/in ("Jakarta" OR "DKI Jakarta" OR "Jakarta Pusat" OR "Jakarta Selatan") (Founder OR "Co-founder" OR "Company Founder") (startup OR "scale-up" OR entrepreneur OR "fast-growing") "venture capital" -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance
+
+# Input: CIO Indonesia cloud migration enterprise
+site:linkedin.com/in (Indonesia OR Indonesian) (CIO OR "Chief Information Officer" OR "VP Information" OR "IT Director") ("cloud computing" OR "cloud services" OR AWS OR Azure OR "Google Cloud") ("cloud migration" OR "cloud transformation") (enterprise OR multinational OR corporation OR BUMN OR Tbk) -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance

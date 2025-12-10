@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Seniority Mapping Schema",
+  "description": "Schema for validating AI-generated seniority mappings for LinkedIn search",
+  "type": "object",
+  "properties": {
+    "seniority_mappings": {
+      "type": "string",
+      "description": "LinkedIn search terms with OR operators for seniority targeting",
+      "pattern": "^[\\w\\s\\\"\\-\\(\\)OR]+$",
+      "minLength": 5,
+      "maxLength": 1000
+    },
+    "context_notes": {
+      "type": "string",
+      "description": "Industry-specific considerations for seniority titles",
+      "maxLength": 500
+    },
+    "indonesian_variants": {
+      "type": "string",
+      "description": "Local language title variations in Indonesian",
+      "maxLength": 500
+    }
+  },
+  "required": ["seniority_mappings"],
+  "additionalProperties": false
+}

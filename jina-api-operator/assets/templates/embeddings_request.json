@@ -1,0 +1,86 @@
+{
+  "text_embeddings": {
+    "description": "Generate embeddings for text inputs",
+    "endpoint": "https://api.jina.ai/v1/embeddings",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v4",
+      "input": [
+        "Hello world, this is a test.",
+        "Machine learning is fascinating.",
+        "Natural language processing enables computers to understand human language."
+      ],
+      "normalized": true,
+      "embedding_type": "float",
+      "dimensions": 1024
+    }
+  },
+  "image_embeddings": {
+    "description": "Generate embeddings for images",
+    "endpoint": "https://api.jina.ai/v1/embeddings",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v4",
+      "input": [
+        {
+          "text": "A beautiful sunset over mountains"
+        },
+        {
+          "url": "https://example.com/image.jpg"
+        },
+        {
+          "bytes": "BASE64_ENCODED_IMAGE_DATA"
+        }
+      ],
+      "normalized": true
+    }
+  },
+  "code_embeddings": {
+    "description": "Generate embeddings for code snippets",
+    "endpoint": "https://api.jina.ai/v1/embeddings",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-code-embeddings-1.5b",
+      "input": [
+        "def fibonacci(n):",
+        "    if n <= 1:",
+        "        return n",
+        "    return fibonacci(n-1) + fibonacci(n-2)"
+      ],
+      "normalized": true
+    }
+  },
+  "batch_processing": {
+    "description": "Process multiple texts in single request",
+    "endpoint": "https://api.jina.ai/v1/embeddings",
+    "method": "POST",
+    "headers": {
+      "authorisation": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-embeddings-v4",
+      "input": [
+        "First document text to embed",
+        "Second document text to embed",
+        "Third document text to embed",
+        "Fourth document text to embed",
+        "Fifth document text to embed"
+      ],
+      "normalized": true,
+      "embedding_type": "float"
+    }
+  }
+}

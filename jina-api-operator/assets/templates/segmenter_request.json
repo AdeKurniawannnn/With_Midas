@@ -1,0 +1,63 @@
+{
+  "basic_tokenization": {
+    "description": "Basic text tokenization",
+    "endpoint": "https://api.jina.ai/v1/segment",
+    "method": "GET",
+    "params": {
+      "input": "This is a sample text that will be tokenized into individual tokens."
+    }
+  },
+  "text_chunking": {
+    "description": "Text chunking for long documents",
+    "endpoint": "https://api.jina.ai/v1/segment",
+    "method": "GET",
+    "params": {
+      "input": "This is a very long document that needs to be broken down into smaller chunks for better processing by language models. Each chunk should be manageable and maintain semantic coherence while preserving the original document structure and meaning.",
+      "return_chunks": "true",
+      "max_chunk_length": "1000"
+    }
+  },
+  "code_chunking": {
+    "description": "Chunking code while preserving syntax",
+    "endpoint": "https://api.jina.ai/v1/segment",
+    "method": "GET",
+    "params": {
+      "input": "def process_large_dataset(data):\n    \"\"\"Process large dataset in batches\"\"\"\n    for i in range(0, len(data), batch_size):\n        yield data[i:i+batch_size]\n\ndef analyze_performance_metrics(metrics):\n    \"\"\"Analyze performance metrics\"\"\"\n    return {\n        'avg_response_time': sum(metrics) / len(metrics),\n        'max_response_time': max(metrics),\n        'p95_response_time': sorted(metrics)[int(len(metrics) * 0.95)]\n    }",
+      "return_chunks": "true",
+      "max_chunk_length": "500"
+    }
+  },
+  "markdown_chunking": {
+    "description": "Chunking markdown while preserving structure",
+    "endpoint": "api.jina.ai/v1/segment",
+    "method": "GET",
+    "params": {
+      "input": "# Introduction\n\nThis is a comprehensive guide to machine learning. We'll cover various topics including:\n\n## Supervised Learning\n- Classification\n- Regression\n- Clustering\n\n## Unsupervised Learning\n- Dimensionality reduction\n- Anomaly detection\n\n## Deep Learning\n- Neural networks\n- Convolutional neural networks\n- Recurrent neural networks\n\n## Conclusion\n\nMachine learning is a fascinating field that continues to evolve.",
+      "return_chunks": "true",
+      "max_chunk_length": "800"
+    }
+  },
+  "multilingual_chunking": {
+    "description": "Chunking multilingual content",
+    "endpoint": "https://api.jina.ai/v1/segment",
+    "method": "GET",
+    "params": {
+      "input": "Ce document est écrit en français et contient des informations techniques. Il couvre des sujets comme l'apprentissage automatique, le traitement du langage naturel, et les réseaux de neurones. La section suivante explique les concepts fondamentaux de l'apprentissage automatique.",
+      "return_chunks": "true",
+      "max_chunk_length": "900"
+    }
+  },
+  "post_request_chunking": {
+    "description": "Using POST method for chunking",
+    "endpoint": "https://api.jina.ai/v1/segment",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "input": "This is a very long document that contains multiple sections and subsections. It needs to be processed efficiently for downstream analysis and information extraction while maintaining the logical structure and readability of the original content.",
+      "return_chunks": "true",
+      "max_chunk_length": "1200"
+    }
+  }
+}

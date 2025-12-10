@@ -1,0 +1,57 @@
+{
+  "basic_url": {
+    "description": "Basic URL reading without parameters",
+    "endpoint": "https://r.jina.ai/http://example.com",
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY"
+    }
+  },
+  "advanced_extraction": {
+    "description": "URL reading with advanced parameters",
+    "endpoint": "https://r.jina.ai/http://example.com",
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY"
+    },
+    "params": {
+      "browser_engine": "default",
+      "content_format": "default",
+      "json_response": "true",
+      "timeout": 30,
+      "token_budget": 10000,
+      "use_readerlm_v2": "false",
+      "gather_links": "all",
+      "gather_images": "all",
+      "remove_images": "false",
+      "viewport": "1280x720",
+      "github_flavored_markdown": "true",
+      "eu_compliance": "false"
+    }
+  },
+  "web_search": {
+    "description": "Web search with results conversion",
+    "endpoint": "https://s.jina.ai/python programming tutorial",
+    "method": "GET",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY"
+    },
+    "params": {
+      "json_response": "true"
+    }
+  },
+  "local_file": {
+    "description": "Process local PDF or HTML file",
+    "endpoint": "https://r.jina.ai/",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY"
+    },
+    "files": {
+      "file": "@/path/to/document.pdf"
+    },
+    "data": {
+      "url": "http://reference-url.com"
+    }
+  }
+}

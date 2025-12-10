@@ -1,0 +1,43 @@
+{
+  "query": "site:linkedin.com/in (\"Jakarta\" OR \"DKI Jakarta\" OR \"Jakarta Pusat\" OR \"Jakarta Selatan\") (CEO OR \"Chief Executive Officer\" OR Founder OR \"Co-founder\") (fintech OR \"financial technology\" OR \"banking technology\" OR payment) -recruiter -hr -human -resources -intern -student -graduate -trainer -consultant -freelance",
+  "leads": [
+    {
+      "name": "John Doe",
+      "title": "CEO & Founder",
+      "company": "Fintech Indonesia",
+      "location": "Jakarta, Indonesia",
+      "linkedin_url": "https://www.linkedin.com/in/johndoe",
+      "description": "Leading digital payment solutions for Indonesian market with 10+ years experience in fintech innovation."
+    },
+    {
+      "name": "Jane Smith",
+      "title": "Chief Executive Officer",
+      "company": "Digital Banking Solutions",
+      "location": "Jakarta Selatan, DKI Jakarta",
+      "linkedin_url": "https://www.linkedin.com/in/janesmith",
+      "description": "Transforming traditional banking through technology. Former VP at major Indonesian bank."
+    },
+    {
+      "name": "Ahmad Wijaya",
+      "title": "Founder & CEO",
+      "company": "PayTech Indonesia",
+      "location": "Jakarta Pusat, DKI Jakarta",
+      "linkedin_url": "https://www.linkedin.com/in/ahmadwijaya",
+      "description": "Pioneering blockchain-based payment systems. Ex-Google engineer with MBA from Stanford."
+    }
+  ],
+  "metadata": {
+    "total_leads": 3,
+    "search_time": "2025-11-23T17:45:00Z",
+    "execution_time_seconds": 2.34,
+    "source": "BrightData SERP API",
+    "search_parameters": {
+      "engine": "google",
+      "location": "Indonesia",
+      "language": "id",
+      "num_results": 10
+    }
+  },
+  "file_path": "output/ceo_jakarta_fintech_20251123_174500.json",
+  "success": true
+}

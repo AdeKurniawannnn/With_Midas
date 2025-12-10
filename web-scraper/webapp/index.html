@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraper - Extract Content Easily</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">🕷️</span>
+            <span class="brand-text">WebScraper</span>
+        </div>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#how-it-works" class="nav-link">How it Works</a>
+            <a href="#scraper" class="nav-link highlight">Start Scraping</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Scraper Form -->
+    <section class="hero-scraper">
+        <div class="hero-scraper-content">
+            <h1 class="hero-title">
+                Let's <span class="gradient-text">Scrape</span>
+            </h1>
+
+            <div class="scraper-card hero-card">
+                <!-- Input Area -->
+                <div class="input-group">
+                    <label for="url-input">Website URL</label>
+                    <div class="url-input-wrapper">
+                        <span class="url-icon">🔗</span>
+                        <input
+                            type="url"
+                            id="url-input"
+                            placeholder="https://example.com/article"
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+
+                <!-- Options -->
+                <div class="options-group">
+                    <h4>Scraping Options</h4>
+                    <div class="options-grid">
+                        <div class="option-item">
+                            <input type="checkbox" id="multi-page" class="checkbox">
+                            <label for="multi-page">Multi-page crawling</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="same-domain" class="checkbox" checked>
+                            <label for="same-domain">Same domain only</label>
+                        </div>
+                    </div>
+
+                    <div class="advanced-options" id="advanced-options">
+                        <div class="option-row">
+                            <div class="option-field">
+                                <label for="depth">Crawl Depth</label>
+                                <input type="number" id="depth" value="2" min="1" max="5">
+                            </div>
+                            <div class="option-field">
+                                <label for="max-pages">Max Pages</label>
+                                <input type="number" id="max-pages" value="25" min="1" max="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scrape Button -->
+                <button id="scrape-btn" class="scrape-button">
+                    <span class="btn-text">Start Scraping</span>
+                    <span class="btn-loader" style="display: none;">
+                        <svg class="spinner" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="60" stroke-dashoffset="20"/>
+                        </svg>
+                        Scraping...
+                    </span>
+                </button>
+
+                <!-- Progress -->
+                <div id="progress-container" class="progress-container" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <p class="progress-text" id="progress-text">Initializing...</p>
+                </div>
+            </div>
+
+            <!-- Results Area -->
+            <div id="results-container" class="results-container" style="display: none;">
+                <div class="results-header">
+                    <h3>📄 Scraped Content</h3>
+                    <div class="results-actions">
+                        <button class="action-btn" id="copy-btn" title="Copy to clipboard">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                        </button>
+                        <button class="action-btn" id="download-btn" title="Download markdown">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="results-meta" id="results-meta"></div>
+                <div class="results-content">
+                    <div id="results-output"></div>
+                </div>
+            </div>
+
+            <!-- Error Display -->
+            <div id="error-container" class="error-container" style="display: none;">
+                <div class="error-icon">⚠️</div>
+                <p id="error-message"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title">Powerful <span class="gradient-text">Features</span></h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #e03490, #52246e);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                </div>
+                <h3>Lightning Fast</h3>
+                <p>Extract content in seconds with our optimized scraping engine</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #00abee, #23aad0);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <h3>Clean Markdown</h3>
+                <p>Get beautifully formatted markdown ready for any use case</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #b5f483, #aacf1b);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                </div>
+                <h3>Multi-Page Crawl</h3>
+                <p>Crawl entire websites with configurable depth and limits</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: linear-gradient(135deg, #fb9d2d, #f2e148);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </div>
+                <h3>Easy Export</h3>
+                <p>Download results as Markdown, JSON, or plain text</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="how-it-works" class="how-it-works">
+        <h2 class="section-title">How it <span class="gradient-text">Works</span></h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Paste URL</h3>
+                    <p>Enter the website URL you want to scrape</p>
+                </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Configure</h3>
+                    <p>Set crawling options if needed</p>
+                </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Extract</h3>
+                    <p>Click scrape and get clean content</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-icon">🕷️</span>
+                <span class="brand-text">WebScraper</span>
+            </div>
+            <p class="footer-text">Built with Jina AI Reader API</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

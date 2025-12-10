@@ -1,0 +1,89 @@
+{
+  "basic_reranking": {
+    "description": "Basic document reranking",
+    "endpoint": "https://api.jina.ai/v1/rerank",
+    "method": "POST",
+    "headers": {
+      "Authorization": "rerank YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-reranker-v3",
+      "query": "python programming best practices",
+      "documents": [
+        "Python code should follow PEP 8 guidelines for readability.",
+        "Java uses strongly typed variables and exception handling.",
+        "JavaScript enables dynamic web development with frameworks.",
+        "C++ provides low-level memory management and performance."
+      ],
+      "top_n": 3
+    }
+  },
+  "multilingual_reranking": {
+    "description": "Multilingual document reranking",
+    "endpoint": "https://api.jina.ai/v1/rerank",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-reranker-v2-base-multilingual",
+      "query": "How to sort arrays efficiently",
+      "documents": [
+        "def quick_sort(arr): return sorted(arr)",
+        "function bubbleSort(list): /* implementation */",
+        "Array.prototype.sort() method in JavaScript",
+        "std::sort(v.begin(), v.end()) in C++"
+      ],
+      "top_n": 2,
+      "max_chunks_per_doc": 5
+    }
+  },
+  "code_search": {
+    "description": "Code snippet reranking for programming queries",
+    "endpoint": "https://api.jina.ai/v1/rerank",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-reranker-v2-base-multilingual",
+      "query": "Implement binary search algorithm",
+      "documents": [
+        "def binary_search(arr, target):",
+        "    low, high = 0, len(arr) - 1",
+        "    while low <= high:",
+        "        mid = (low + high) // 2",
+        "        if arr[mid] == target: return mid",
+        "        elif arr[mid] < target: low = mid + 1",
+        "        else: high = mid - 1",
+        "    return -1",
+        "Linear search implementation for small arrays",
+        "Hash table provides O(1) average lookup time",
+        "Tree structures enable logarithmic time complexity operations"
+      ],
+      "top_n": 3
+    }
+  },
+  "tabular_data": {
+    "description": "Rerank tabular data by query relevance",
+    "endpoint": "https://api.jina.ai/v1/rerank",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-reranker-v3",
+      "query": "Which table has the highest revenue?",
+      "documents": [
+        "Table: sales_data. Revenue: $500,000. Rows: 1000.",
+        "Table: customer_info. Revenue: $200,000. Rows: 500.",
+        "Table: product_catalog. Revenue: $300,000. Rows: 200."
+      ],
+      "top_n": 2
+    }
+  }
+}

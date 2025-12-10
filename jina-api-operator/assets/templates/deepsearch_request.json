@@ -1,0 +1,261 @@
+{
+  "basic_research": {
+    "description": "Basic DeepSearch query",
+    "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What are the latest developments in quantum computing?"
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "medium"
+    }
+  },
+  "comprehensive_research": {
+    "description": "Comprehensive research with high reasoning effort",
+    "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Conduct a comprehensive analysis of renewable energy trends in 2024, including technological advances, market adoption, policy changes, and future predictions. Focus on both established and emerging technologies."
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "high",
+      "budget_tokens": 500000,
+      "max_attempts": 5,
+      "team_size": 2,
+      "boost_hostnames": ["iea.org", "nature.com", "science.org"],
+      "max_returned_urls": 15
+    }
+  },
+  "academic_research": {
+    "attention": "Optimized for academic research",
+    "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Find recent research papers on transformer architecture improvements in 2024, focusing on attention mechanisms, efficiency optimizations, and novel applications."
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "high",
+      "budget_tokens": 300000,
+      "arxiv_optimized": true,
+      "search_language_code": "en",
+      "answer_language_code": "en"
+    }
+  },
+  "market_analysis": {
+    "description": "Market research with domain prioritization",
+    "endpoint": "electric_search": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Analyze the current state of the electric vehicle market, including market share, key players, technology trends, and future growth prospects."
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "medium",
+      "budget_tokens": 200000,
+      "boost_hostnames": ["tesla.com", "chargepoint.com", "evsales.com"],
+      "max_returned_urls": 8,
+      "search_language_code": "en"
+    }
+  },
+  "fact_checking": {
+    "description": "Fact-checking with source verification",
+    "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Verify the claim that 'Python is the most popular programming language in 2024' by examining multiple sources and providing evidence."
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "high",
+      "budget_tokens": 400000,
+      "no_direct_answer": true,
+      "max_returned_urls": 10
+    }
+  },
+    "technical_documentation": {
+      "description": "Deep dive into technical documentation",
+      "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json"
+      },
+      "data": {
+        "model": "jina-deepsearch-v1",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Explain the differences between microservices and monolithic architecture, including trade-offs, best practices, and implementation considerations for each approach."
+          }
+        ],
+        "stream": true,
+        "reasoning_effort": "high",
+        "budget_tokens": 300000,
+        "max_attempts": 3,
+        "team_size": 1
+      }
+    },
+    "conversational_research": {
+      "description": "Multi-turn conversation research",
+      "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY",
+        "content-type": "application/json"
+      },
+      "data": {
+        "model": "jina-deepsearch-v1",
+        "messages": [
+          {
+            "role": "user",
+            "content": "I'm interested in learning about artificial intelligence."
+          },
+          {
+            "role": "assistant",
+            "content": "I'd be happy to help you learn about AI! What specific aspect interests you most?"
+          },
+          {
+            "role": "user",
+            "content": "I'm particularly interested in machine learning and neural networks. Can you recommend some learning resources?"
+          }
+        ],
+        "stream": true,
+        "reasoning_effort": "medium",
+        "budget_tokens": 150000
+      }
+    },
+    "low_budget_research": {
+      "description": "Cost-effective research with basic reasoning",
+      "endpoint": "https://deepsearch.jina.ai/v1/chat/competitions",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json"
+      },
+      "data": {
+        "model": "jina-deepsearch-v1",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What are some good Python libraries for data analysis?"
+          }
+        ],
+        "stream": true,
+        "reasoning_effort": "low",
+        "budget_tokens": 50000
+      }
+    }
+  },
+  "high_quality_research": {
+    "description": "Maximum quality research with extensive budget",
+    "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Provide a detailed analysis of blockchain technology and its potential impact on various industries, including current adoption rates, technical challenges, regulatory considerations, and future prospects."
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "high",
+      "budget_tokens": 1000000,
+      "max_attempts": 10,
+      "team_size": 3
+    }
+  },
+    "custom_domain_search": {
+    "description": "Search within specific domains only",
+    "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "POST",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Research machine learning papers only from arxiv.org"
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "medium",
+      "budget_tokens": 200000,
+      "only_hostnames": ["arxiv.org"],
+      "search_language_code": "en"
+    }
+  },
+    "multilingual_research": {
+      "description": "Research across multiple languages",
+      "endpoint": "https://deepsearch.jina.ai/v1/chat/completions",
+    "method": "post",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_KEY",
+      "Content-Type": "application/json"
+    },
+    "data": {
+      "model": "jina-deepsearch-v1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Recherche des développements récents en intelligence artificielle"
+        }
+      ],
+      "stream": true,
+      "reasoning_effort": "medium",
+      "budget_tokens": 200000,
+      "search_language_code": "fr",
+      "answer_language_code": "fr"
+    }
+  }
+}

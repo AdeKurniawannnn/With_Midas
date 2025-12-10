@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Industry Mapping Schema",
+  "description": "Schema for validating AI-generated industry mappings for LinkedIn search",
+  "type": "object",
+  "properties": {
+    "industry_mappings": {
+      "type": "string",
+      "description": "LinkedIn search terms with OR operators for industry targeting",
+      "pattern": "^[\\w\\s\\\"\\-\\(\\)OR]+$",
+      "minLength": 5,
+      "maxLength": 1000
+    },
+    "related_technologies": {
+      "type": "string",
+      "description": "Associated technology stacks and platforms",
+      "maxLength": 500
+    },
+    "market_indicators": {
+      "type": "string",
+      "description": "Signs of market maturity and adoption in Indonesia",
+      "maxLength": 500
+    },
+    "indonesian_context": {
+      "type": "string",
+      "description": "Local market characteristics and regulatory considerations",
+      "maxLength": 500
+    }
+  },
+  "required": ["industry_mappings"],
+  "additionalProperties": false
+}
