@@ -1,0 +1,3 @@
+[submodule "serp-api-aggregator"]
+	path = serp-api-aggregator
+	url = https://github.com/deleon626/serp-api-aggregator
