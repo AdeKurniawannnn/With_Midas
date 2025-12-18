@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ExternalLink, Download } from "lucide-react";
 import type { LinkedInProfile } from "@/lib/api";
 
@@ -18,18 +20,36 @@ interface ResultsTableProps {
 }
 
 export function ResultsTable({ profiles, metadata }: ResultsTableProps) {
+  // State untuk tracking checkbox
+  const [selectedProfiles, setSelectedProfiles] = useState<Set<number>>(new Set());
+
+  const handleToggle = (index: number) => {
+    const newSelected = new Set(selectedProfiles);
+    if (newSelected.has(index)) {
+      newSelected.delete(index);
+    } else {
+      newSelected.add(index);
+    }
+    setSelectedProfiles(newSelected);
+  };
+
   const handleExportCSV = () => {
-    // Convert to CSV with available fields
-    const headers = ["Position", "Title", "Description", "Profile URL", "Avg Position", "Frequency", "Pages Seen"];
-    const rows = profiles.map((p) => [
-      p.best_position,
-      `"${p.title.replace(/"/g, '""')}"`,
-      `"${(p.description || "").replace(/"/g, '""')}"`,
-      p.profile_url,
-      p.avg_position.toFixed(1),
-      p.frequency,
-      `"${p.pages_seen.join(', ')}"`,
-    ]);
+    // Convert to CSV with new format - tambah kolom Selected
+    const headers = ["No", "Selected", "Nama", "Pekerjaan", "Description", "Profile URL"];
+    const rows = profiles.map((p, index) => {
+      const titleParts = p.title.split(' - ');
+      const name = titleParts[0].trim();
+      const headline = titleParts.slice(1).join(' - ').trim();
+
+      return [
+        index + 1,
+        selectedProfiles.has(index) ? "Yes" : "No",
+        `"${name.replace(/"/g, '""')}"`,
+        `"${headline.replace(/"/g, '""')}"`,
+        `"${(p.description || "").replace(/"/g, '""')}"`,
+        p.profile_url,
+      ];
+    });
 
     const csv = [
       headers.join(","),
@@ -75,50 +95,58 @@ export function ResultsTable({ profiles, metadata }: ResultsTableProps) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-16">Rank</TableHead>
-                <TableHead>Profile Info</TableHead>
-                <TableHead className="w-24">Avg Pos</TableHead>
-                <TableHead className="w-20">Seen</TableHead>
-                <TableHead className="w-24">Action</TableHead>
+                <TableHead className="w-16">No</TableHead>
+                <TableHead className="w-16 text-center">Togle</TableHead>
+                <TableHead className="w-48">Nama</TableHead>
+                <TableHead className="w-64">Pekerjaan</TableHead>
+                <TableHead>Description</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {profiles.map((profile, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">#{profile.best_position}</TableCell>
-                  <TableCell>
-                    <div className="font-medium text-blue-600">{profile.title}</div>
-                    {profile.description && (
-                      <div className="text-sm text-gray-600 mt-1 line-clamp-2">
-                        {profile.description}
+              {profiles.map((profile, index) => {
+                // Parse name dan headline dari title
+                const titleParts = profile.title.split(' - ');
+                const name = titleParts[0].trim();
+                const headline = titleParts.slice(1).join(' - ').trim();
+
+                return (
+                  <TableRow key={index} className="hover:bg-gray-50">
+                    <TableCell className="font-medium text-center">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Checkbox
+                        checked={selectedProfiles.has(index)}
+                        onCheckedChange={() => handleToggle(index)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <a
+                        href={profile.profile_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                      >
+                        {name}
+                      </a>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm text-gray-700">
+                        {headline || '-'}
                       </div>
-                    )}
-                    <div className="text-xs text-gray-500 truncate max-w-md mt-1">
-                      {profile.profile_url}
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span className="text-sm font-medium">{profile.avg_position.toFixed(1)}</span>
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span className="text-sm">
-                      {profile.frequency}x
-                    </span>
-                    <div className="text-xs text-gray-500">
-                      p{profile.pages_seen.join(',')}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => window.open(profile.profile_url, "_blank")}
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    </TableCell>
+                    <TableCell>
+                      {profile.description ? (
+                        <div className="text-sm text-gray-600 line-clamp-2">
+                          {profile.description}
+                        </div>
+                      ) : (
+                        <span className="text-gray-400 text-sm">-</span>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>

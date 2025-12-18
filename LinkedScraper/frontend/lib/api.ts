@@ -50,6 +50,7 @@ export interface SearchResponse {
 interface BackendProfile {
   name: string;
   headline: string | null;
+  description: string | null;  // SERP snippet
   location: string | null;
   company: string | null;
   education: string | null;
@@ -93,9 +94,7 @@ export const searchLinkedIn = async (params: SearchRequest): Promise<SearchRespo
   const profiles: LinkedInProfile[] = backendResult.profiles.map(profile => ({
     profile_url: profile.profile_url,
     title: `${profile.name}${profile.headline ? ' - ' + profile.headline : ''}`,
-    description: [profile.company, profile.location, profile.education]
-      .filter(Boolean)
-      .join(' • '),
+    description: profile.description || null, // Use SERP description directly
     rank: profile.rank,
     best_position: profile.best_position,
     avg_position: profile.best_position, // Backend doesn't provide avg, use best_position

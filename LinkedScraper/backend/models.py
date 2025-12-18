@@ -30,6 +30,7 @@ class LinkedInProfile(BaseModel):
     """Single LinkedIn profile result with parsed data"""
     name: str
     headline: Optional[str] = None
+    description: Optional[str] = None  # SERP snippet/description
     location: Optional[str] = None
     company: Optional[str] = None
     education: Optional[str] = None
