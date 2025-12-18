@@ -4,7 +4,8 @@ LinkedIn scraping service using serp-api-aggregator
 import time
 import sys
 import os
-from typing import Dict
+import re
+from typing import Dict, Optional
 
 # Add serp-api-aggregator to Python path
 serp_path = os.path.expanduser("~/Library/Mobile Documents/com~apple~CloudDocs/skills/serp-api-aggregator/src")
@@ -13,6 +14,75 @@ if serp_path not in sys.path:
 
 from serp.client import SerpAggregator
 from models import LinkedInProfile
+
+
+def parse_company_description(description: str) -> Dict[str, Optional[any]]:
+    """
+    Parse company description to extract structured data
+
+    Example description:
+    "Vertilogic. Jasa TI dan Konsultan TI. Ukuran perusahaan: 2-10 karyawan.
+    Kantor Pusat: Jakarta, DKI Jakarta. Jenis: Perseroan Tertutup.
+    Tahun Pendirian: 2015. Spesialisasi: ..."
+
+    Returns:
+        Dict with parsed fields: industry, location, followers, company_size, etc.
+    """
+    if not description:
+        return {}
+
+    parsed = {}
+
+    # Extract industry (first sentence after company name, before location)
+    # Pattern: "Company Name. Industry Type. Location..."
+    industry_match = re.search(r'\.([^.]+?)\.\s*(?:Ukuran|Kantor|Jenis|Tahun|\d+\s+pengikut|[A-Z][a-z]+,)', description)
+    if not industry_match:
+        # Alternative: industry might be before location pattern "City, Country"
+        industry_match = re.search(r'\.([^.]+?)\.\s*[A-Z][a-z]+,\s*[A-Z]', description)
+    if industry_match:
+        parsed['industry'] = industry_match.group(1).strip()
+
+    # Extract followers: "X pengikut" or "X followers"
+    followers_match = re.search(r'([\d.,]+)\s+(?:pengikut|followers)', description, re.IGNORECASE)
+    if followers_match:
+        followers_str = followers_match.group(1).replace('.', '').replace(',', '')
+        try:
+            parsed['followers'] = int(followers_str)
+        except ValueError:
+            pass
+
+    # Extract company size: "Ukuran perusahaan: X karyawan"
+    size_match = re.search(r'Ukuran perusahaan:\s*([^.]+?)(?:\.|$)', description, re.IGNORECASE)
+    if size_match:
+        parsed['company_size'] = size_match.group(1).strip()
+
+    # Extract headquarters: "Kantor Pusat: Location"
+    hq_match = re.search(r'Kantor Pusat:\s*([^.]+?)(?:\.|$)', description, re.IGNORECASE)
+    if hq_match:
+        parsed['headquarters'] = hq_match.group(1).strip()
+
+    # Extract company type: "Jenis: Type"
+    type_match = re.search(r'Jenis:\s*([^.]+?)(?:\.|$)', description, re.IGNORECASE)
+    if type_match:
+        parsed['company_type'] = type_match.group(1).strip()
+
+    # Extract founded year: "Tahun Pendirian: YYYY"
+    year_match = re.search(r'Tahun Pendirian:\s*(\d{4})', description, re.IGNORECASE)
+    if year_match:
+        try:
+            parsed['founded_year'] = int(year_match.group(1))
+        except ValueError:
+            pass
+
+    # Extract location from "City, Country" pattern if not HQ
+    if 'headquarters' not in parsed:
+        location_match = re.search(r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?),\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)', description)
+        if location_match:
+            parsed['location'] = f"{location_match.group(1)}, {location_match.group(2)}"
+    else:
+        parsed['location'] = parsed['headquarters']
+
+    return parsed
 
 
 async def search_linkedin_profiles(
@@ -92,11 +162,16 @@ async def search_linkedin_profiles(
                 # Get SERP description/snippet
                 description = organic_result.description or ""
 
+                # Parse company data if this is a company search
+                parsed_data = {}
+                if url_filter == "linkedin.com/company":
+                    parsed_data = parse_company_description(description)
+
                 profile = LinkedInProfile(
                     name=name,
                     headline=headline,
                     description=description,
-                    location=None,
+                    location=parsed_data.get('location'),
                     company=None,
                     education=None,
                     connections=None,
@@ -104,7 +179,14 @@ async def search_linkedin_profiles(
                     rank=organic_result.rank,
                     best_position=organic_result.best_position,
                     frequency=organic_result.frequency,
-                    pages_seen=organic_result.pages_seen
+                    pages_seen=organic_result.pages_seen,
+                    # Company-specific parsed fields
+                    industry=parsed_data.get('industry'),
+                    followers=parsed_data.get('followers'),
+                    company_size=parsed_data.get('company_size'),
+                    founded_year=parsed_data.get('founded_year'),
+                    company_type=parsed_data.get('company_type'),
+                    headquarters=parsed_data.get('headquarters')
                 )
                 profiles.append(profile)
 

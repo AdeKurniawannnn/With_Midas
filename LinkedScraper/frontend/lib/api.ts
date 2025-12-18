@@ -31,6 +31,15 @@ export interface LinkedInProfile {
   avg_position: number;
   frequency: number;
   pages_seen: number[];
+
+  // Company-specific fields (parsed from description)
+  industry: string | null;
+  followers: number | null;
+  company_size: string | null;
+  founded_year: number | null;
+  company_type: string | null;
+  headquarters: string | null;
+  location: string | null;
 }
 
 export interface SearchResponse {
@@ -60,6 +69,14 @@ interface BackendProfile {
   best_position: number;
   frequency: number;
   pages_seen: number[];
+
+  // Company-specific fields (parsed from description)
+  industry: string | null;
+  followers: number | null;
+  company_size: string | null;
+  founded_year: number | null;
+  company_type: string | null;
+  headquarters: string | null;
 }
 
 interface BackendSearchResponse {
@@ -100,6 +117,15 @@ export const searchLinkedIn = async (params: SearchRequest): Promise<SearchRespo
     avg_position: profile.best_position, // Backend doesn't provide avg, use best_position
     frequency: profile.frequency,
     pages_seen: profile.pages_seen,
+
+    // Company-specific fields
+    industry: profile.industry || null,
+    followers: profile.followers || null,
+    company_size: profile.company_size || null,
+    founded_year: profile.founded_year || null,
+    company_type: profile.company_type || null,
+    headquarters: profile.headquarters || null,
+    location: profile.location || null,
   }));
 
   return {

@@ -30,7 +30,7 @@ class LinkedInProfile(BaseModel):
     """Single LinkedIn profile result with parsed data"""
     name: str
     headline: Optional[str] = None
-    description: Optional[str] = None  # SERP snippet/description
+    description: Optional[str] = None  # SERP snippet/description (raw text)
     location: Optional[str] = None
     company: Optional[str] = None
     education: Optional[str] = None
@@ -40,6 +40,14 @@ class LinkedInProfile(BaseModel):
     best_position: int
     frequency: int
     pages_seen: List[int]
+
+    # Company-specific fields (parsed from description)
+    industry: Optional[str] = None
+    followers: Optional[int] = None
+    company_size: Optional[str] = None
+    founded_year: Optional[int] = None
+    company_type: Optional[str] = None
+    headquarters: Optional[str] = None
 
 
 class SearchResponse(BaseModel):
