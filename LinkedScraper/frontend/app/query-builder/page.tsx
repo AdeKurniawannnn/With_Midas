@@ -3,11 +3,17 @@
 import { useState } from "react";
 import { SearchForm } from "@/components/SearchForm";
 import { CompanySearchForm } from "@/components/CompanySearchForm";
+import { PostsSearchForm, type PostsSearchParams } from "@/components/PostsSearchForm";
+import { JobsSearchForm, type JobsSearchParams } from "@/components/JobsSearchForm";
+import { AllSearchForm, type AllSearchParams } from "@/components/AllSearchForm";
 import { ResultsTable } from "@/components/ResultsTable";
+import { PostsTable, type LinkedInPost } from "@/components/PostsTable";
+import { JobsTable, type LinkedInJob } from "@/components/JobsTable";
+import { AllResultsTable, type LinkedInAllResult } from "@/components/AllResultsTable";
 import { ProgressBar } from "@/components/ProgressBar";
 import { SiteFilter } from "@/components/query-builder/SiteFilter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { searchLinkedIn, type SearchResponse } from "@/lib/api";
+import { searchLinkedIn, searchLinkedInPosts, searchLinkedInJobs, searchLinkedInAll, type SearchResponse } from "@/lib/api";
 import { useQueryBuilderStore } from "@/stores/queryBuilderStore";
 
 /**
@@ -19,6 +25,12 @@ import { useQueryBuilderStore } from "@/stores/queryBuilderStore";
 export default function QueryBuilderPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<SearchResponse | null>(null);
+  const [postsResults, setPostsResults] = useState<LinkedInPost[] | null>(null);
+  const [postsMetadata, setPostsMetadata] = useState<any>(null);
+  const [jobsResults, setJobsResults] = useState<LinkedInJob[] | null>(null);
+  const [jobsMetadata, setJobsMetadata] = useState<any>(null);
+  const [allResults, setAllResults] = useState<LinkedInAllResult[] | null>(null);
+  const [allMetadata, setAllMetadata] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Get siteFilter from Zustand store
@@ -41,6 +53,72 @@ export default function QueryBuilderPage() {
     } catch (err: any) {
       setError(err.response?.data?.detail || "Failed to search. Please try again.");
       console.error("Search error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePostsSearch = async (params: PostsSearchParams) => {
+    setIsLoading(true);
+    setError(null);
+    setPostsResults(null);
+    setPostsMetadata(null);
+
+    try {
+      const data = await searchLinkedInPosts(params);
+      setPostsResults(data.posts);
+      setPostsMetadata({
+        keywords: params.keywords,
+        total_results: data.total_results,
+        pages_fetched: data.metadata.pages_fetched
+      });
+    } catch (err: any) {
+      setError(err.response?.data?.detail || "Failed to search posts. Please try again.");
+      console.error("Posts search error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleJobsSearch = async (params: JobsSearchParams) => {
+    setIsLoading(true);
+    setError(null);
+    setJobsResults(null);
+    setJobsMetadata(null);
+
+    try {
+      const data = await searchLinkedInJobs(params);
+      setJobsResults(data.jobs);
+      setJobsMetadata({
+        job_title: params.job_title,
+        total_results: data.total_results,
+        pages_fetched: data.metadata.pages_fetched
+      });
+    } catch (err: any) {
+      setError(err.response?.data?.detail || "Failed to search jobs. Please try again.");
+      console.error("Jobs search error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAllSearch = async (params: AllSearchParams) => {
+    setIsLoading(true);
+    setError(null);
+    setAllResults(null);
+    setAllMetadata(null);
+
+    try {
+      const data = await searchLinkedInAll(params);
+      setAllResults(data.results);
+      setAllMetadata({
+        keywords: params.keywords,
+        total_results: data.total_results,
+        pages_fetched: data.metadata.pages_fetched
+      });
+    } catch (err: any) {
+      setError(err.response?.data?.detail || "Failed to search all content. Please try again.");
+      console.error("All search error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -115,6 +193,7 @@ export default function QueryBuilderPage() {
             <ResultsTable
               profiles={results.profiles}
               metadata={results.metadata}
+              dataType={siteFilter}
             />
           )}
         </>
@@ -144,25 +223,97 @@ export default function QueryBuilderPage() {
             <ResultsTable
               profiles={results.profiles}
               metadata={results.metadata}
+              dataType={siteFilter}
             />
           )}
         </>
       )}
 
-      {/* Placeholder for other filters (Semua, Posts, Jobs) */}
-      {siteFilter !== 'profile' && siteFilter !== 'company' && (
-        <div className="w-full max-w-4xl mx-auto mt-8">
-          <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-gray-600 text-lg font-medium mb-2">
-                🚧 Coming Soon
-              </p>
-              <p className="text-gray-500 text-sm">
-                Fitur untuk <strong>{siteFilter === 'all' ? 'Semua' : siteFilter === 'posts' ? 'Postingan' : 'Lowongan'}</strong> sedang dalam pengembangan
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+      {/* Posts Search */}
+      {siteFilter === 'posts' && (
+        <>
+          {/* Posts Search Form */}
+          <PostsSearchForm onSearch={handlePostsSearch} isLoading={isLoading} />
+
+          {/* Progress Bar */}
+          <ProgressBar isLoading={isLoading} />
+
+          {/* Error Message */}
+          {error && (
+            <div className="w-full max-w-2xl mx-auto mt-8">
+              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+                <p className="font-medium">Error</p>
+                <p className="text-sm">{error}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Posts Results Table */}
+          {postsResults && (
+            <PostsTable
+              posts={postsResults}
+              metadata={postsMetadata}
+            />
+          )}
+        </>
+      )}
+
+      {/* Jobs Search */}
+      {siteFilter === 'jobs' && (
+        <>
+          {/* Jobs Search Form */}
+          <JobsSearchForm onSearch={handleJobsSearch} isLoading={isLoading} />
+
+          {/* Progress Bar */}
+          <ProgressBar isLoading={isLoading} />
+
+          {/* Error Message */}
+          {error && (
+            <div className="w-full max-w-2xl mx-auto mt-8">
+              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+                <p className="font-medium">Error</p>
+                <p className="text-sm">{error}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Jobs Results Table */}
+          {jobsResults && (
+            <JobsTable
+              jobs={jobsResults}
+              metadata={jobsMetadata}
+            />
+          )}
+        </>
+      )}
+
+      {/* All Content Search */}
+      {siteFilter === 'all' && (
+        <>
+          {/* All Search Form */}
+          <AllSearchForm onSearch={handleAllSearch} isLoading={isLoading} />
+
+          {/* Progress Bar */}
+          <ProgressBar isLoading={isLoading} />
+
+          {/* Error Message */}
+          {error && (
+            <div className="w-full max-w-2xl mx-auto mt-8">
+              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+                <p className="font-medium">Error</p>
+                <p className="text-sm">{error}</p>
+              </div>
+            </div>
+          )}
+
+          {/* All Results Table */}
+          {allResults && (
+            <AllResultsTable
+              results={allResults}
+              metadata={allMetadata}
+            />
+          )}
+        </>
       )}
 
       {/* Footer */}

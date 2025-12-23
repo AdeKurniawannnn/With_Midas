@@ -146,3 +146,153 @@ export const testAPI = async () => {
   const response = await apiClient.get('/health');
   return response.data;
 };
+
+// Scrape Detail Types
+export interface ScrapeDetailRequest {
+  urls: string[];
+}
+
+export interface CompanyDetail {
+  url: string;
+  name: string;
+  full_description: string | null;
+  specialties: string[] | null;
+  employee_count: number | null;
+  about: string | null;
+  website: string | null;
+  phone: string | null;
+  founded: number | null;
+  scraped_at: string;
+}
+
+export interface ScrapeDetailResponse {
+  success: boolean;
+  total_scraped: number;
+  companies: CompanyDetail[];
+  metadata: {
+    total_urls: number;
+    successful: number;
+    failed: number;
+    time_taken_seconds: number;
+  };
+}
+
+export const scrapeCompanyDetails = async (urls: string[]): Promise<ScrapeDetailResponse> => {
+  const response = await apiClient.post<ScrapeDetailResponse>('/scrape-detail', {
+    urls
+  });
+  return response.data;
+};
+
+// Posts Search Types
+export interface PostsSearchRequest {
+  keywords: string;
+  author_type: 'all' | 'companies' | 'people';
+  max_results: number;
+  location: string;
+  language: string;
+  country: string;
+}
+
+export interface PostsSearchResponse {
+  success: boolean;
+  query: string;
+  total_results: number;
+  posts: Array<{
+    post_url: string;
+    author_name: string;
+    author_profile_url: string;
+    posted_date: string;
+    content: string;
+    hashtags: string[];
+    likes: number;
+    comments: number;
+    shares: number;
+    post_type: string;
+    rank: number;
+  }>;
+  metadata: {
+    keywords: string;
+    author_type: string;
+    country: string;
+    language: string;
+    pages_fetched: number;
+    time_taken_seconds: number;
+  };
+}
+
+export const searchLinkedInPosts = async (params: PostsSearchRequest): Promise<PostsSearchResponse> => {
+  const response = await apiClient.post<PostsSearchResponse>('/search-posts', params);
+  return response.data;
+};
+
+// Jobs Search Types
+export interface JobsSearchRequest {
+  job_title: string;
+  location: string;
+  experience_level: string;
+  max_results: number;
+  language: string;
+  country: string;
+}
+
+export interface JobsSearchResponse {
+  success: boolean;
+  query: string;
+  total_results: number;
+  jobs: Array<{
+    job_url: string;
+    job_title: string;
+    company_name: string;
+    location: string;
+    description: string;
+    rank: number;
+  }>;
+  metadata: {
+    job_title: string;
+    experience_level: string;
+    country: string;
+    language: string;
+    pages_fetched: number;
+    time_taken_seconds: number;
+  };
+}
+
+export const searchLinkedInJobs = async (params: JobsSearchRequest): Promise<JobsSearchResponse> => {
+  const response = await apiClient.post<JobsSearchResponse>('/search-jobs', params);
+  return response.data;
+};
+
+// All Search Types (Mixed Content)
+export interface AllSearchRequest {
+  keywords: string;
+  location: string;
+  max_results: number;
+  language: string;
+  country: string;
+}
+
+export interface AllSearchResponse {
+  success: boolean;
+  query: string;
+  total_results: number;
+  results: Array<{
+    url: string;
+    title: string;
+    description: string;
+    type: "profile" | "company" | "post" | "job" | "other";
+    rank: number;
+  }>;
+  metadata: {
+    keywords: string;
+    country: string;
+    language: string;
+    pages_fetched: number;
+    time_taken_seconds: number;
+  };
+}
+
+export const searchLinkedInAll = async (params: AllSearchRequest): Promise<AllSearchResponse> => {
+  const response = await apiClient.post<AllSearchResponse>('/search-all', params);
+  return response.data;
+};
